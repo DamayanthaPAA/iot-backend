@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT Data Display</title>
+    <style>
+        #data {
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>IoT Data Display</h1>
+    <div id="data">
+        <p><strong>MAC Address:</strong> <span id="mac">-</span></p>
+        <p><strong>Distance:</strong> <span id="distance">-</span></p>
+        <p><strong>Unit:</strong> <span id="unit">-</span></p>
+    </div>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:3000');
+
+        ws.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            document.getElementById('mac').textContent = data.mac;
+            document.getElementById('distance').textContent = data.distance;
+            document.getElementById('unit').textContent = data.unit;
+        };
+
+        ws.onerror = function (error) {
+            console.error('WebSocket error:', error);
+        };
+    </script>
+</body>
+</html>
