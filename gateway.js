@@ -33,6 +33,9 @@ mqttClient.on('message', function (receivedTopic, message) {
     console.log('Message:', message.toString());
     // Broadcast the message to all WebSocket clients
     wss.clients.forEach(client => {
+        // WebSockets allow both the client and server to send and receive 
+        // messages in 
+        // real time without needing to repeatedly establish a connection.
         if (client.readyState === WebSocket.OPEN) {
             client.send(message.toString());
         }
